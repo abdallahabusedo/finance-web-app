@@ -1,8 +1,19 @@
-import { Box, Button, Group, Text, TextInput } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Group,
+  Notification,
+  Text,
+  TextInput,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { IconX } from "@tabler/icons-react";
+import axios from "axios";
 import React from "react";
 const LoginComponent = () => {
   const [isMobile, setIsMobile] = React.useState(window.innerWidth < 786);
+  const [errorMessage, setErrorMessage] = React.useState("");
+
   const form = useForm({
     initialValues: {
       email: "",
@@ -24,8 +35,25 @@ const LoginComponent = () => {
   }, []);
 
   const handleSubmit = (values) => {
-    console.log(values);
-    window.location.replace("/home");
+    const configuration = {
+      method: "post",
+      url: "http://localhost:3001/login",
+      data: {
+        email: values.email,
+        password: values.password,
+      },
+    };
+    // make the API call
+    axios(configuration)
+      .then((res) => {
+        localStorage.setItem("email", res.data.email);
+        localStorage.setItem("token", res.data.token);
+        window.location.replace("/home");
+      })
+      .catch((error) => {
+        setErrorMessage(error.response.data.message);
+        console.log(error);
+      });
   };
 
   return (
@@ -34,6 +62,23 @@ const LoginComponent = () => {
         display: "flex",
       }}
     >
+      <Box
+        sx={{
+          position: "absolute",
+          bottom: "20px",
+          left: "10px",
+        }}
+      >
+        {errorMessage && (
+          <Notification
+            icon={<IconX size="1.1rem" />}
+            color="red"
+            onClose={() => setErrorMessage("")}
+          >
+            {errorMessage}
+          </Notification>
+        )}
+      </Box>
       <Box
         sx={{
           backgroundColor: "white",
