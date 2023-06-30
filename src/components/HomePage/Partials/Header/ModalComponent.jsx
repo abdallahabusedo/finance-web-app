@@ -31,9 +31,9 @@ const ModalComponent = (props) => {
     };
     // make the API call
     axios(configuration)
-      .then(() => {
-        props.close();
-        window.location.reload();
+      .then(async () => {
+        await props.close();
+        await window.location.reload();
       })
       .catch((error) => {
         console.log(error);
