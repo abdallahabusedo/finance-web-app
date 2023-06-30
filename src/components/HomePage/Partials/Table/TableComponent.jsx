@@ -1,7 +1,7 @@
-import { ScrollArea, Table, useMantineTheme } from "@mantine/core";
+import { ScrollArea, Table } from "@mantine/core";
 import React from "react";
-import StringRow from "./TableRows/StringRow";
 import DateRow from "./TableRows/DateRow";
+import StringRow from "./TableRows/StringRow";
 
 let data = [
   {
@@ -24,7 +24,6 @@ let data = [
   },
 ];
 const TableComponent = () => {
-  const theme = useMantineTheme();
   const rows = data.map((item, index) => (
     <tr key={index}>
       <td>
