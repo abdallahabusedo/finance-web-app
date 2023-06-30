@@ -37,6 +37,8 @@ const ModalComponent = (props) => {
       })
       .catch((error) => {
         console.log(error);
+        props.close();
+        window.location.reload();
       });
   };
   React.useEffect(() => {

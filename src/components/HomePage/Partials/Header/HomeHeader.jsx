@@ -5,6 +5,7 @@ import ModalComponent from "./ModalComponent";
 
 const HomeHeader = () => {
   const [opened, { open, close }] = useDisclosure(false);
+  let email = localStorage.getItem("email");
   return (
     <Box>
       <img src="/logo.png" width={256} />
@@ -23,7 +24,7 @@ const HomeHeader = () => {
             flex: "1",
           }}
         >
-          Welcome
+          Welcome {email}
         </Text>
         <Box
           sx={{
