@@ -37,7 +37,7 @@ const LoginComponent = () => {
   const handleSubmit = (values) => {
     const configuration = {
       method: "post",
-      url: "http://localhost:3001/login",
+      url: "https://auth-backend-coral.vercel.app/login",
       data: {
         email: values.email,
         password: values.password,

@@ -37,7 +37,7 @@ function SignupComponent() {
     // set configurations
     const configuration = {
       method: "post",
-      url: "http://localhost:3001/register",
+      url: "https://auth-backend-coral.vercel.app/register",
       data: {
         email: values.email,
         password: values.password,

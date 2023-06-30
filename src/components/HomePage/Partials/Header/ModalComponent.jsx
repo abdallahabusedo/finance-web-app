@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Group,
-  NumberInput,
-  Text,
-  TextInput,
-} from "@mantine/core";
+import { Box, Button, Group, NumberInput, Text } from "@mantine/core";
 import { MonthPicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import axios from "axios";
@@ -22,28 +15,29 @@ const ModalComponent = (props) => {
     },
   });
   const handleSubmit = (values) => {
-    console.log(values);
+    let token = localStorage.getItem("token");
     const configuration = {
       method: "post",
-      url: "http://localhost:3001/deposits",
+      url: "https://auth-backend-coral.vercel.app/deposits",
       data: {
         totalAmount: values.totalAmount,
         currentDate: new Date().toISOString(),
         goalDate: new Date(values.goalDate).toISOString(),
         monthlyPayment: perMonth,
       },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     };
     // make the API call
     axios(configuration)
-      .then((res) => {
+      .then(() => {
+        props.close();
         window.location.reload();
       })
       .catch((error) => {
-        // setErrorMessage(error.response.data.message);
         console.log(error);
       });
-
-    // window.location.replace("/home");
   };
   React.useEffect(() => {
     form.values.goalDate = new Date(value).toISOString();

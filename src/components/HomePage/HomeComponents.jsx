@@ -7,15 +7,18 @@ import axios from "axios";
 const HomeComponents = () => {
   const [tableData, setTableData] = React.useState([]);
   React.useEffect(() => {
+    let token = localStorage.getItem("token");
     const configuration = {
       method: "get",
-      url: "http://localhost:3001/deposits",
+      url: "https://auth-backend-coral.vercel.app/deposits",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     };
     // make the API call
     axios(configuration)
-      .then((res) => {
-        console.log(res);
-        setTableData(res.data);
+      .then(async (res) => {
+        await setTableData(res.data);
       })
       .catch((error) => {
         // setErrorMessage(error.response.data.message);

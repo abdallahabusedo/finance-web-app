@@ -42,7 +42,10 @@ const HomeHeader = () => {
             Create new Deposit
           </Button>
           <Button
-            onClick={() => window.location.replace("/")}
+            onClick={() => {
+              localStorage.clear();
+              window.location.replace("/");
+            }}
             sx={{
               backgroundColor: "#086972",
               transition: "all 0.5s ease-in-out",
