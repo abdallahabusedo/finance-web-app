@@ -1,9 +1,18 @@
-import { Box, Button, Group, Text, TextInput } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Group,
+  Notification,
+  Text,
+  TextInput,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
 import React from "react";
-
+import axios from "axios";
+import { IconX } from "@tabler/icons-react";
 function SignupComponent() {
   const [isMobile, setIsMobile] = React.useState(window.innerWidth < 786);
+  const [errorMessage, setErrorMessage] = React.useState("");
   const form = useForm({
     initialValues: {
       email: "",
@@ -24,12 +33,49 @@ function SignupComponent() {
     window.addEventListener("resize", handleResize, false);
   }, []);
 
+  const handleSubmit = (values) => {
+    // set configurations
+    const configuration = {
+      method: "post",
+      url: "http://localhost:3001/register",
+      data: {
+        email: values.email,
+        password: values.password,
+      },
+    };
+    // make the API call
+    axios(configuration)
+      .then(() => {
+        window.location.replace("/login");
+      })
+      .catch((error) => {
+        setErrorMessage(error.response.data.message);
+        console.log(error);
+      });
+  };
   return (
     <Box
       sx={{
         display: "flex",
       }}
     >
+      <Box
+        sx={{
+          position: "absolute",
+          bottom: "20px",
+          left: "10px",
+        }}
+      >
+        {errorMessage && (
+          <Notification
+            icon={<IconX size="1.1rem" />}
+            color="red"
+            onClose={() => setErrorMessage("")}
+          >
+            {errorMessage}
+          </Notification>
+        )}
+      </Box>
       <Box
         sx={{
           backgroundColor: "white",
@@ -42,7 +88,7 @@ function SignupComponent() {
           width: isMobile ? "100%" : "50%",
         }}
       >
-        <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
           <Box
             sx={{
               display: "flex",
@@ -104,6 +150,7 @@ function SignupComponent() {
           </Box>
         </form>
       </Box>
+
       {!isMobile ? (
         <Box
           sx={{
