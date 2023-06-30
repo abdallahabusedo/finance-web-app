@@ -142,7 +142,7 @@ function SignupComponent() {
                   cursor: "pointer",
                   color: "#086972",
                 }}
-                onClick={() => window.location.replace("/")}
+                onClick={() => window.location.replace("/login")}
               >
                 login
               </Text>
