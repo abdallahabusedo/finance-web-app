@@ -12,7 +12,7 @@ const TableComponent = (props) => {
           <StringRow str={index + 1} />
         </td>
         <td>
-          <StringRow str={item.totalAmount} />
+          <StringRow str={item.totalAmount + "$"} />
         </td>
         <td>
           <DateRow date={item.currentDate} />
@@ -21,7 +21,7 @@ const TableComponent = (props) => {
           <DateRow date={item.goalDate} />
         </td>
         <td>
-          <StringRow str={item.monthlyPayment} />
+          <StringRow str={item.monthlyPayment + "$"} />
         </td>
       </tr>
     ));

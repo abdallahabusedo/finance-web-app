@@ -8,7 +8,9 @@ import {
 } from "@mantine/core";
 import { MonthPicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
+import axios from "axios";
 import React from "react";
+
 const ModalComponent = (props) => {
   const [value, setValue] = React.useState(null);
   const [numOfMonths, setNumOfMonths] = React.useState(0);
@@ -21,7 +23,26 @@ const ModalComponent = (props) => {
   });
   const handleSubmit = (values) => {
     console.log(values);
-    props.close();
+    const configuration = {
+      method: "post",
+      url: "http://localhost:3001/deposits",
+      data: {
+        totalAmount: values.totalAmount,
+        currentDate: new Date().toISOString(),
+        goalDate: new Date(values.goalDate).toISOString(),
+        monthlyPayment: perMonth,
+      },
+    };
+    // make the API call
+    axios(configuration)
+      .then((res) => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        // setErrorMessage(error.response.data.message);
+        console.log(error);
+      });
+
     // window.location.replace("/home");
   };
   React.useEffect(() => {
